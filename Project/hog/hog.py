@@ -210,6 +210,9 @@ def always_roll(n):
     assert n >= 0 and n <= 10
     # BEGIN PROBLEM 6
     "*** YOUR CODE HERE ***"
+    def helper(x, y):
+        return n
+    return helper
     # END PROBLEM 6
 
 
@@ -241,6 +244,12 @@ def is_always_roll(strategy, goal=GOAL):
     """
     # BEGIN PROBLEM 7
     "*** YOUR CODE HERE ***"
+    result = strategy(0, 0)
+    for i in range(goal):
+        for j in range(goal):
+            if strategy(i, j) != result:
+                return False
+    return True
     # END PROBLEM 7
 
 
@@ -257,6 +266,12 @@ def make_averaged(original_function, samples_count=1000):
     """
     # BEGIN PROBLEM 8
     "*** YOUR CODE HERE ***"
+    def average(*args):
+        sum = 0
+        for _ in range(samples_count):
+            sum += original_function(*args)
+        return sum / samples_count
+    return average
     # END PROBLEM 8
 
 
@@ -271,6 +286,15 @@ def max_scoring_num_rolls(dice=six_sided, samples_count=1000):
     """
     # BEGIN PROBLEM 9
     "*** YOUR CODE HERE ***"
+    max = 0
+    index = 0
+    for i in range(1, 11, 1):
+        make_roll_averaged = make_averaged(roll_dice, samples_count)
+        current = make_roll_averaged(i, dice)
+        if (current > max):
+            max = current
+            index = i
+    return index
     # END PROBLEM 9
 
 
@@ -315,14 +339,25 @@ def boar_strategy(score, opponent_score, threshold=11, num_rolls=6):
     points, and returns NUM_ROLLS otherwise. Ignore score and Sus Fuss.
     """
     # BEGIN PROBLEM 10
-    return num_rolls  # Remove this line once implemented.
+    current = boar_brawl(score, opponent_score)
+    if current > threshold:
+        return 0
+    else:
+        return num_rolls
+    # Remove this line once implemented.
     # END PROBLEM 10
 
 
 def sus_strategy(score, opponent_score, threshold=11, num_rolls=6):
     """This strategy returns 0 dice when your score would increase by at least threshold."""
     # BEGIN PROBLEM 11
-    return num_rolls  # Remove this line once implemented.
+    current_boar = boar_brawl(score, opponent_score)  # Remove this line once implemented.
+    current_sus = sus_points(score + current_boar)
+    difference = current_sus - score
+    if difference >= threshold:
+        return 0
+    else:
+        return num_rolls
     # END PROBLEM 11
 
 
