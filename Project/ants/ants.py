@@ -166,6 +166,8 @@ class ThrowerAnt(Ant):
     damage = 1
     # ADD/OVERRIDE CLASS ATTRIBUTES HERE
     food_cost = 3
+    lower_bound = 0
+    upper_bound = float('inf')
 
     def nearest_bee(self):
         """Return the nearest Bee in a Place (that is not the hive) connected to
@@ -174,12 +176,26 @@ class ThrowerAnt(Ant):
         This method returns None if there is no such Bee (or none in range).
         """
         # BEGIN Problem 3 and 4
+        '''
         current_place = self.place
         while current_place is not None:
             if not current_place.is_hive:
                 if len(current_place.bees) != 0:
                     return random_bee(current_place.bees)
             current_place = current_place.entrance
+        return None
+        '''
+        
+        current_place = self.place
+        distance = 0
+        while current_place is not None:
+            in_range = self.lower_bound <= distance <= self.upper_bound
+            if not current_place.is_hive and in_range:
+                if len(current_place.bees) > 0:
+                    return random_bee(current_place.bees)
+            distance += 1
+            current_place = current_place.entrance
+        return None
         # END Problem 3 and 4
 
     def throw_at(self, target):
@@ -210,8 +226,9 @@ class ShortThrower(ThrowerAnt):
     name = 'Short'
     food_cost = 2
     # OVERRIDE CLASS ATTRIBUTES HERE
+    upper_bound = 3
     # BEGIN Problem 4
-    implemented = False   # Change to True to view in the GUI
+    implemented = True   # Change to True to view in the GUI
     # END Problem 4
 
 
@@ -221,8 +238,9 @@ class LongThrower(ThrowerAnt):
     name = 'Long'
     food_cost = 2
     # OVERRIDE CLASS ATTRIBUTES HERE
+    lower_bound = 5
     # BEGIN Problem 4
-    implemented = False   # Change to True to view in the GUI
+    implemented = True   # Change to True to view in the GUI
     # END Problem 4
 
 
