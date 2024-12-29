@@ -10,11 +10,10 @@ test = {
           >>> twos = Pair(2, Pair(2, nil))
           >>> plus = BuiltinProcedure(scheme_add) # + procedure
           >>> scheme_apply(plus, twos, env) # Type SchemeError if you think this errors
-          46beb7deeeb5e9af1c8d785b12558317
-          # locked
+          4
           """,
           'hidden': False,
-          'locked': True,
+          'locked': False,
           'multiline': False
         },
         {
