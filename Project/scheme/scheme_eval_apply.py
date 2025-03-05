@@ -49,6 +49,16 @@ def scheme_apply(procedure, args, env):
         try:
             # BEGIN PROBLEM 2
             "*** YOUR CODE HERE ***"
+            # 将scheme list转变为 python list
+            lst = []
+            while args is not nil:
+                lst.append(args.first)
+                args = args.rest
+            # 判断 need_env
+            if procedure.need_env is True:
+                lst.append(env)
+            # 调用 py_func
+            return procedure.py_func(*lst)
             # END PROBLEM 2
         except TypeError as err:
             raise SchemeError('incorrect number of arguments: {0}'.format(procedure))
