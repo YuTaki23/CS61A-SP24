@@ -1,4 +1,5 @@
 from email.quoprimime import body_check
+from locale import currency
 from socket import fromshare
 from scheme_eval_apply import *
 from scheme_utils import *
@@ -129,6 +130,17 @@ def do_and_form(expressions, env):
     """
     # BEGIN PROBLEM 12
     "*** YOUR CODE HERE ***"
+    if expressions is nil:
+        return True
+    
+    currency = scheme_eval(expressions.first, env)
+    if is_scheme_true(currency):
+        if expressions.rest is nil:
+            return currency
+        else:
+            return do_and_form(expressions.rest, env)
+    else:
+        return currency
     # END PROBLEM 12
 
 def do_or_form(expressions, env):
@@ -147,6 +159,17 @@ def do_or_form(expressions, env):
     """
     # BEGIN PROBLEM 12
     "*** YOUR CODE HERE ***"
+    if expressions is nil:
+        return False
+    
+    currency = scheme_eval(expressions.first, env)
+    if is_scheme_false(currency):
+        if expressions.rest is nil:
+            return currency
+        else:
+            return do_or_form(expressions.rest, env)
+    else:
+        return currency
     # END PROBLEM 12
 
 def do_cond_form(expressions, env):
@@ -167,6 +190,10 @@ def do_cond_form(expressions, env):
         if is_scheme_true(test):
             # BEGIN PROBLEM 13
             "*** YOUR CODE HERE ***"
+            if clause.rest is nil:
+                return test
+            else:
+                return eval_all(clause.rest, env)
             # END PROBLEM 13
         expressions = expressions.rest
 
@@ -191,6 +218,13 @@ def make_let_frame(bindings, env):
     names = vals = nil
     # BEGIN PROBLEM 14
     "*** YOUR CODE HERE ***"
+    while bindings is not nil:
+        front = bindings.first
+        validate_form(front, 2, 2)
+        names = Pair(front.first, names)
+        vals = Pair(eval_all(front.rest, env), vals)
+        bindings = bindings.rest
+    validate_formals(names)
     # END PROBLEM 14
     return env.make_child_frame(names, vals)
 
