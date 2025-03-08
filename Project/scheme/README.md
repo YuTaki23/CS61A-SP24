@@ -306,6 +306,8 @@ def do_or_form(expressions, env):
 
 **这道题确实没看懂什么意思，在此也不误人子弟了。**
 
+[点这里看总的代码实现](https://github.com/YuTaki23/CS61A-SP24)
+
 ## 写在后面
 
 后续的题目就不再做了，是关于Scheme的。
